@@ -1,29 +1,17 @@
-/*
+/* Generic kernel_id.h */
 
-KERNEL_ID.H GENERIQUE
-
- */
 #ifndef KERNEL_ID_H
 #define KERNEL_ID_H
 
- /****** Object OS ******/
+/* Object OS */
+/* Object TASK */
+/* Object COUNTER */
+/* Object ALARM */
+/* Object RESOURCE */
+/* Object EVENT */
+/* Object ISR */
+/* Object APPMODE */
 
+#define appmode1 (AppModeType)( 1U << 0 )
 
- /****** Object TASK ******/
-
- /****** Object COUNTER ******/
-
- /****** Object ALARM ******/
-
- /****** Object RESOURCE ******/
-
- /****** Object EVENT ******/
-
- /****** Object ISR ******/
-
- /****** Object APPMODE ******/
-
-#define appmode1	(AppModeType)( 1U << 0 )
-
-#endif	/* ! KERNEL_ID_H */
-
+#endif	/* KERNEL_ID_H */

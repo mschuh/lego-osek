@@ -1,3 +1,2 @@
-/* Definir la période de la tache ICI (en ms)
-*/
+/* task's period (in ms) */
 #define TASK1_PERIOD 50
