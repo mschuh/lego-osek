@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.249"
+    ComputedModelVersion    "1.250"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -53,10 +53,10 @@ Model {
 	$ClassName		"Simulink.EditorInfo"
 	IsActive		[1]
 	ViewObjType		"SimulinkSubsys"
-	LoadSaveID		"147"
-	Extents			[1681.0, 823.0]
-	ZoomFactor		[1.1352380952380954]
-	Offset			[-14.380536912752063, 89.114645468588776]
+	LoadSaveID		"667"
+	Extents			[1685.0, 853.0]
+	ZoomFactor		[1.14]
+	Offset			[0.0, 0.0]
       }
     }
   }
@@ -64,11 +64,11 @@ Model {
   Creator		  "alex"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "schuhm"
+  LastModifiedBy	  "dienstmf"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Dec 01 15:31:19 2015"
-  RTWModifiedTimeStamp	  370884675
-  ModelVersionFormat	  "1.%<AutoIncrement:249>"
+  LastModifiedDate	  "Tue Dec 01 16:19:58 2015"
+  RTWModifiedTimeStamp	  370887593
+  ModelVersionFormat	  "1.%<AutoIncrement:250>"
   ConfigurationManager	  "none"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -1064,7 +1064,7 @@ Model {
       System {
 	Name			"Controller"
 	Location		[2, 51, 1918, 1051]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1083,6 +1083,7 @@ Model {
 	  Position		  [60, 243, 90, 257]
 	  ZOrder		  -1
 	  IconDisplay		  "Port number"
+	  OutDataTypeStr	  "double"
 	}
 	Block {
 	  BlockType		  Inport
@@ -1092,6 +1093,7 @@ Model {
 	  ZOrder		  -2
 	  Port			  "2"
 	  IconDisplay		  "Port number"
+	  OutDataTypeStr	  "double"
 	}
 	Block {
 	  BlockType		  Inport
@@ -1114,7 +1116,7 @@ Model {
 	  System {
 	    Name		    "motor_control"
 	    Location		    [2, 51, 1918, 1051]
-	    Open		    off
+	    Open		    on
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1133,6 +1135,7 @@ Model {
 	      Position		      [20, 58, 50, 72]
 	      ZOrder		      28
 	      IconDisplay	      "Port number"
+	      OutDataTypeStr	      "double"
 	    }
 	    Block {
 	      BlockType		      Inport
@@ -1142,6 +1145,7 @@ Model {
 	      ZOrder		      29
 	      Port		      "2"
 	      IconDisplay	      "Port number"
+	      OutDataTypeStr	      "double"
 	    }
 	    Block {
 	      BlockType		      Inport
@@ -1151,6 +1155,7 @@ Model {
 	      ZOrder		      31
 	      Port		      "3"
 	      IconDisplay	      "Port number"
+	      OutDataTypeStr	      "boolean"
 	    }
 	    Block {
 	      BlockType		      SubSystem
@@ -1163,7 +1168,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"Calcul ecart"
-		Location		[2, 51, 1922, 1081]
+		Location		[2, 51, 1918, 1051]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -1791,6 +1796,7 @@ Model {
 	      ZOrder		      32
 	      ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
 	      IconDisplay	      "Port number"
+	      OutDataTypeStr	      "double"
 	    }
 	    Block {
 	      BlockType		      Outport
@@ -1801,6 +1807,7 @@ Model {
 	      ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
 	      Port		      "2"
 	      IconDisplay	      "Port number"
+	      OutDataTypeStr	      "double"
 	    }
 	    Line {
 	      ZOrder		      141
@@ -1927,6 +1934,7 @@ Model {
 	      Position		      [70, 323, 100, 337]
 	      ZOrder		      26
 	      IconDisplay	      "Port number"
+	      OutDataTypeStr	      "double"
 	    }
 	    Block {
 	      BlockType		      Inport
@@ -1936,6 +1944,7 @@ Model {
 	      ZOrder		      28
 	      Port		      "2"
 	      IconDisplay	      "Port number"
+	      OutDataTypeStr	      "double"
 	    }
 	    Block {
 	      BlockType		      SubSystem
@@ -1969,6 +1978,7 @@ Model {
 		  ZOrder		  11
 		  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
 		  IconDisplay		  "Port number"
+		  OutDataTypeStr	  "double"
 		}
 		Block {
 		  BlockType		  Inport
@@ -2227,6 +2237,7 @@ Model {
 		  Position		  [20, 63, 50, 77]
 		  ZOrder		  11
 		  IconDisplay		  "Port number"
+		  OutDataTypeStr	  "double"
 		}
 		Block {
 		  BlockType		  Inport
@@ -2236,6 +2247,7 @@ Model {
 		  ZOrder		  13
 		  Port			  "2"
 		  IconDisplay		  "Port number"
+		  OutDataTypeStr	  "boolean"
 		}
 		Block {
 		  BlockType		  Logic
@@ -2992,6 +3004,7 @@ Model {
 		  Position		  [775, 118, 805, 132]
 		  ZOrder		  12
 		  IconDisplay		  "Port number"
+		  OutDataTypeStr	  "boolean"
 		}
 		Line {
 		  ZOrder		  44
@@ -3095,6 +3108,7 @@ Model {
 	      Position		      [565, 338, 595, 352]
 	      ZOrder		      27
 	      IconDisplay	      "Port number"
+	      OutDataTypeStr	      "boolean"
 	    }
 	    Line {
 	      ZOrder		      14
@@ -3153,6 +3167,7 @@ Model {
 	  ZOrder		  -5
 	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
 	  IconDisplay		  "Port number"
+	  OutDataTypeStr	  "double"
 	}
 	Block {
 	  BlockType		  Outport
@@ -3163,6 +3178,7 @@ Model {
 	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
 	  Port			  "2"
 	  IconDisplay		  "Port number"
+	  OutDataTypeStr	  "double"
 	}
 	Line {
 	  ZOrder		  139
