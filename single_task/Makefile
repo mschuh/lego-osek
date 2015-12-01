@@ -22,4 +22,4 @@ Controller.lus: matlab/ExRobotAndEnvironmentController.mdl
 	mdl2lus matlab/ExRobotAndEnvironmentController.mdl -system Controller
 
 clear: clean
-	rm -f *.xml Controller.lus Controller.c Controller.h *.ec *.mws
+	rm -fr *.xml Controller.lus Controller.c Controller.h *.ec *.mws build
