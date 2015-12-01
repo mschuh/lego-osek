@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.245"
+    ComputedModelVersion    "1.246"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [2.0, 51.0, 1920.0, 1030.0]
+      Location		      [0.0, 25.0, 1920.0, 1030.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -66,9 +66,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schuhm"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Nov 24 15:41:38 2015"
-  RTWModifiedTimeStamp	  370280475
-  ModelVersionFormat	  "1.%<AutoIncrement:245>"
+  LastModifiedDate	  "Tue Dec 01 14:45:13 2015"
+  RTWModifiedTimeStamp	  370881878
+  ModelVersionFormat	  "1.%<AutoIncrement:246>"
   ConfigurationManager	  "none"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -1063,7 +1063,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Controller"
-	Location		[2, 51, 1922, 1081]
+	Location		[0, 25, 1920, 1055]
 	Open			on
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200
@@ -1416,10 +1416,6 @@ Model {
 		  IconDisplay		  "Port number"
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  1
 		  SrcBlock		  "Logical\nOperator"
 		  SrcPort		  1
@@ -1428,10 +1424,6 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  9
 		  SrcBlock		  "Unit Delay"
 		  SrcPort		  1
@@ -1440,10 +1432,6 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  4
 		  SrcBlock		  "Logical\nOperator1"
 		  SrcPort		  1
@@ -1461,10 +1449,6 @@ Model {
 		  }
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  7
 		  SrcBlock		  "R"
 		  SrcPort		  1
@@ -1472,10 +1456,6 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  8
 		  SrcBlock		  "Logical\nOperator2"
 		  SrcPort		  1
@@ -1484,10 +1464,6 @@ Model {
 		  DstPort		  2
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  10
 		  SrcBlock		  "S"
 		  SrcPort		  1
@@ -1520,10 +1496,6 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
-	      FontName		      "Helvetica"
-	      FontSize		      9
-	      FontWeight	      "normal"
-	      FontAngle		      "normal"
 	      ZOrder		      16
 	      SrcBlock		      "R"
 	      SrcPort		      1
@@ -2016,7 +1988,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "WBW"
-	    Location		    [2, 51, 1922, 1081]
+	    Location		    [0, 25, 1920, 1055]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -2041,7 +2013,7 @@ Model {
 	      BlockType		      Inport
 	      Name		      "R"
 	      SID		      "507"
-	      Position		      [20, 158, 50, 172]
+	      Position		      [20, 193, 50, 207]
 	      ZOrder		      13
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -2051,9 +2023,8 @@ Model {
 	      Name		      "Logical\nOperator"
 	      SID		      "584"
 	      Ports		      [2, 1]
-	      Position		      [310, 117, 340, 148]
+	      Position		      [705, 107, 735, 138]
 	      ZOrder		      21
-	      Operator		      "OR"
 	      AllPortsSameDT	      off
 	      OutDataTypeStr	      "boolean"
 	    }
@@ -2062,9 +2033,8 @@ Model {
 	      Name		      "Logical\nOperator1"
 	      SID		      "585"
 	      Ports		      [2, 1]
-	      Position		      [510, 112, 540, 143]
+	      Position		      [500, 112, 530, 143]
 	      ZOrder		      22
-	      Operator		      "OR"
 	      AllPortsSameDT	      off
 	      OutDataTypeStr	      "boolean"
 	    }
@@ -2321,7 +2291,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"white0"
-		Location		[2, 51, 1922, 1081]
+		Location		[0, 25, 1920, 1055]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -2559,7 +2529,7 @@ Model {
 	      Name		      "white1"
 	      SID		      "570"
 	      Ports		      [2, 1]
-	      Position		      [585, 85, 625, 145]
+	      Position		      [615, 85, 655, 145]
 	      ZOrder		      20
 	      RequestExecContextInheritance off
 	      System {
@@ -2800,7 +2770,7 @@ Model {
 	      BlockType		      Outport
 	      Name		      "WBW"
 	      SID		      "506"
-	      Position		      [670, 108, 700, 122]
+	      Position		      [775, 118, 805, 132]
 	      ZOrder		      12
 	      IconDisplay	      "Port number"
 	    }
@@ -2833,52 +2803,32 @@ Model {
 	      }
 	    }
 	    Line {
-	      ZOrder		      52
-	      SrcBlock		      "white0"
-	      SrcPort		      1
-	      DstBlock		      "Logical\nOperator"
-	      DstPort		      1
-	    }
-	    Line {
 	      ZOrder		      45
 	      SrcBlock		      "R"
 	      SrcPort		      1
-	      Points		      [70, 0; 0, -25; 34, 0]
+	      Points		      [70, 0]
 	      Branch {
-		ZOrder			55
-		Points			[0, 58; 91, 0]
-		Branch {
-		  ZOrder		  67
-		  Points		  [0, -58]
-		  DstBlock		  "Logical\nOperator"
-		  DstPort		  2
-		}
-		Branch {
-		  ZOrder		  65
-		  Points		  [220, 0; 0, -63]
-		  DstBlock		  "Logical\nOperator1"
-		  DstPort		  2
-		}
-	      }
-	      Branch {
-		ZOrder			54
+		ZOrder			77
+		Points			[0, -60]
 		DstBlock		"white0"
 		DstPort			2
 	      }
-	    }
-	    Line {
-	      ZOrder		      56
-	      SrcBlock		      "Logical\nOperator"
-	      SrcPort		      1
-	      DstBlock		      "black"
-	      DstPort		      2
-	    }
-	    Line {
-	      ZOrder		      63
-	      SrcBlock		      "Logical\nOperator1"
-	      SrcPort		      1
-	      DstBlock		      "white1"
-	      DstPort		      2
+	      Branch {
+		ZOrder			55
+		Points			[233, 0]
+		Branch {
+		  ZOrder		  85
+		  Points		  [229, 0; 0, -70]
+		  DstBlock		  "white1"
+		  DstPort		  2
+		}
+		Branch {
+		  ZOrder		  84
+		  Points		  [0, -65]
+		  DstBlock		  "black"
+		  DstPort		  2
+		}
+	      }
 	    }
 	    Line {
 	      ZOrder		      68
@@ -2888,8 +2838,31 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      69
+	      ZOrder		      80
+	      SrcBlock		      "white0"
+	      SrcPort		      1
+	      Points		      [54, 0; 0, 45; 166, 0; 0, -35]
+	      DstBlock		      "Logical\nOperator1"
+	      DstPort		      2
+	    }
+	    Line {
+	      ZOrder		      81
+	      SrcBlock		      "Logical\nOperator1"
+	      SrcPort		      1
+	      Points		      [25, 0; 0, 41; 116, 0; 0, -41]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      2
+	    }
+	    Line {
+	      ZOrder		      82
 	      SrcBlock		      "white1"
+	      SrcPort		      1
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      83
+	      SrcBlock		      "Logical\nOperator"
 	      SrcPort		      1
 	      DstBlock		      "WBW"
 	      DstPort		      1
@@ -3132,7 +3105,7 @@ Model {
 	  Name			  "Demux"
 	  SID			  "224"
 	  Ports			  [1, 2]
-	  Position		  [410, 122, 415, 188]
+	  Position		  [410, 124, 415, 191]
 	  ZOrder		  -4
 	  ShowName		  off
 	  Outputs		  "2"
