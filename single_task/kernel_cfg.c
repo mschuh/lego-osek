@@ -1,6 +1,4 @@
-
 /*
-
 KERNEL_CFG.C POUR 1 TACHE PERIODIQUE
 
 --- RIEN NE DOIT ETRE MODIFIE ICI -----
@@ -11,7 +9,6 @@ KERNEL_CFG.C POUR 1 TACHE PERIODIQUE
  */
 
 #include "period.h"
-
 
 #include "osek_kernel.h"
 #include "kernel_id.h"
@@ -26,7 +23,7 @@ KERNEL_CFG.C POUR 1 TACHE PERIODIQUE
 #define TNUM_ALARM     1
 #define TNUM_COUNTER   1
 #define TNUM_ISR2      0
-#define TNUM_RESOURCE  0
+#define TNUM_RESOURCE  1
 #define TNUM_TASK      1
 #define TNUM_EXTTASK   0
 
@@ -89,8 +86,6 @@ const CounterType alminib_cntid[TNUM_ALARM] = { 0, };
 const FP alminib_cback[TNUM_ALARM] = { _activate_alarm_cyclic_alarm, };
 const AppModeType alminib_autosta[TNUM_ALARM] = { 0x00000001, };
 const TickType alminib_almval[TNUM_ALARM] = { 1, };
-
-/* ICI PERIODE D"ACTIVATION EN MS */
 const TickType alminib_cycle[TNUM_ALARM] = { TASK1_PERIOD, };
 
 AlarmType almcb_next[TNUM_ALARM];
@@ -100,11 +95,12 @@ TickType almcb_cycle[TNUM_ALARM];
 
  /****** Object RESOURCE ******/
 
+const ResourceType lcd = 0;
 
-const Priority resinib_ceilpri[TNUM_RESOURCE+1] = { 0};
+const Priority resinib_ceilpri[TNUM_RESOURCE] = { TPRI_MINTASK + 1, };
 
-Priority rescb_prevpri[TNUM_RESOURCE+1];
-ResourceType rescb_prevres[TNUM_RESOURCE+1];
+Priority rescb_prevpri[TNUM_RESOURCE];
+ResourceType rescb_prevres[TNUM_RESOURCE];
 
  /****** Object EVENT ******/
 
@@ -126,8 +122,10 @@ extern void usr_init(void);
 void object_initialize( void )
 {
 	alarm_initialize();
+	resource_initialize();
 	task_initialize();
 	usr_init();
+
 }
 
 
