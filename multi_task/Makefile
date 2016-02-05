@@ -13,7 +13,7 @@ USR_CFILES=\
    obst_detector.c \
    glue_code.c \
 
-## generic makefile for OSEK (requires MDL2LUS2OSEK variable)s
+## generic makefile for OSEK (requires MDL2LUS2OSEK variable)
 include $(MDL2LUS2OSEK)/generic.mak
 
 ## Compilation Lustre->C
