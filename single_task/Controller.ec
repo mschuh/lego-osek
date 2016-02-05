@@ -2,7 +2,7 @@ const
   pi : real;
   kp_teta : real;
   ki_teta : real;
-  
+
 node Controller
   (Cg: real;
   Cd: real;

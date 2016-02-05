@@ -1,6 +1,6 @@
 /********
 * ec2c version 0.67
-* c file generated for node : Controller 
+* c file generated for node : Controller
 * context   method = STATIC
 * ext call  method = PROCEDURES
 ********/
@@ -17,7 +17,7 @@ extern _real ki_teta;
 Internal structure for the call
 --------*/
 typedef struct  {
-   
+
    //INPUTS
    _real _Cg;
    _real _Cd;
@@ -137,7 +137,7 @@ void Controller_step(){
    } else {
       L6 = ctx.M10;
    }
-   L11 = (ctx._Co < 20.000000);
+   L11 = (ctx._Co < 5.000000); // distance for obstacle detection, default = 20
    L5 = (L6 || L11);
    if (ctx.M7) {
       L14 = _false;

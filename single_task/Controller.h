@@ -2,8 +2,8 @@
 * ec2c version 0.67
 * context   method = STATIC
 * ext call  method = PROCEDURES
-* c header file generated for node : Controller 
-* to be used with : Controller.c 
+* c header file generated for node : Controller
+* to be used with : Controller.c
 ********/
 #ifndef _Controller_EC2C_H_FILE
 #define _Controller_EC2C_H_FILE

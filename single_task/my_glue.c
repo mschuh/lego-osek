@@ -8,14 +8,15 @@
 #define LEFT_WHEEL_PORT NXT_PORT_B
 #define RIGHT_LIGHT_SENSOR NXT_PORT_S1
 #define LEFT_LIGHT_SENSOR NXT_PORT_S4
-#define SONAR_SENSOR NXT_PORT_C
+#define SONAR_SENSOR NXT_PORT_S2
 
-#define V_MOY 1.2 // 1  //m/s
-#define V_MAX  2*vmoy + 2 //Si ceci est utilisÃ©, il faut verifier la valeur actuelle du robot
-
+#define V_MOY 1.2 // m/s
+#define V_MAX 3.2 // 0.3768
 
 // from 0-1023 to 0-100
 #define LIGHT_SENSOR_TO_PERCENTAGE(X) ((X)/10.23)
+
+#define LIMIT_SONAR(X) ((X)/2.56)
 
 /* OSEK declarations */
 DeclareCounter(SysTimerCnt);
@@ -133,28 +134,34 @@ void output_motor(U32 port, _real speed) {
 }
 
 void Controller_O_u_d(_real ud) {
-  	_real Pd = (ud * 100);
+	show_var("ud", 5, ud * 100);
 
-  	show_var("Pd", 3, Pd);
+	 ud = V_MOY + ud;
+	_real Pd = (ud / V_MAX) * 100 + 10;
+
+	show_var("Pd", 3, Pd);
+
 	output_motor(RIGHT_WHEEL_PORT, Pd);
 }
 
 void Controller_O_u_g(_real ug) {
-  	_real Pg = (ug * 100);
+	show_var("ug", 6, ug * 100);
 
-  	show_var("Pg", 4, Pg);
+	ug = V_MOY + ug;
+	_real Pg = (ug / V_MAX) * 100 + 10;
+
+	show_var("Pg", 4, Pg);
+
 	output_motor(LEFT_WHEEL_PORT, Pg);
 }
 
 TASK(Task1) {
 	U16 raw_sensor_right;
 	U16 raw_sensor_left;
-	S32 raw_sonar_sensor;
 
 	// returns 0 to 1023
 	raw_sensor_right = ecrobot_get_light_sensor(RIGHT_LIGHT_SENSOR);
 	raw_sensor_left = ecrobot_get_light_sensor(LEFT_LIGHT_SENSOR);
-	raw_sonar_sensor = ecrobot_get_sonar_sensor(SONAR_SENSOR);
 
 	if (raw_sensor_right < sens_white_cal_right) {
 		raw_sensor_right = sens_white_cal_right;
@@ -168,10 +175,10 @@ TASK(Task1) {
 		raw_sensor_left = sens_black_cal_left;
 	}
 
-	raw_sensor_right = ((raw_sensor_right - sens_white_cal_right) * 100 / 
+	raw_sensor_right = ((raw_sensor_right - sens_white_cal_right) * 100 /
 				(sens_black_cal_right - sens_white_cal_right));
 
-	raw_sensor_left = ((raw_sensor_left - sens_white_cal_left) * 100 / 
+	raw_sensor_left = ((raw_sensor_left - sens_white_cal_left) * 100 /
 				(sens_black_cal_left - sens_white_cal_left));
 
 	raw_sensor_right = 100 - raw_sensor_right;
@@ -179,10 +186,16 @@ TASK(Task1) {
 
 	show_var("raw_right", 0, raw_sensor_right);
 	show_var("raw_left", 1, raw_sensor_left);
-	//show_var("sonar", 2, raw_sonar_sensor);
+
+	/* Sonar value */
+	U32 raw_sonar_value = ecrobot_get_sonar_sensor(SONAR_SENSOR);
+	show_var("raw_sonar", 7, raw_sonar_value);
+
+	_float sonar_value = LIMIT_SONAR(raw_sonar_value);
+	show_var("sonar", 2, sonar_value);
 
 	// Controller_I_C* expects value from 0 to 100
-	//Controller_I_Co(raw_sonar_sensor);
+	Controller_I_Co(sonar_value);
 	Controller_I_Cd(raw_sensor_right);
 	Controller_I_Cg(raw_sensor_left);
 
