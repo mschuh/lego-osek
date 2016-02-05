@@ -7,11 +7,11 @@
 #define RIGHT_WHEEL_PORT NXT_PORT_A
 #define LEFT_WHEEL_PORT NXT_PORT_B
 #define RIGHT_LIGHT_SENSOR NXT_PORT_S1
-#define LEFT_LIGHT_SENSOR NXT_PORT_S2
-#define SONAR_SENSOR NXT_PORT_S4
+#define LEFT_LIGHT_SENSOR NXT_PORT_S4
+#define SONAR_SENSOR NXT_PORT_C
 
 #define V_MOY 1.2 // 1  //m/s
-#define V_MAX  20*V_MOY //Si ceci est utilisÃ©, il faut verifier la valeur actuelle du robot
+#define V_MAX  2*vmoy + 2 //Si ceci est utilisÃ©, il faut verifier la valeur actuelle du robot
 
 
 // from 0-1023 to 0-100
@@ -136,7 +136,7 @@ void Controller_O_u_d(_real ud) {
   	_real Pd = (ud * 100);
 
   	show_var("Pd", 3, Pd);
-	output_motor(RIGHT_WHEEL_PORT, Pd);	
+	output_motor(RIGHT_WHEEL_PORT, Pd);
 }
 
 void Controller_O_u_g(_real ug) {
@@ -179,10 +179,10 @@ TASK(Task1) {
 
 	show_var("raw_right", 0, raw_sensor_right);
 	show_var("raw_left", 1, raw_sensor_left);
-	show_var("sonar", 2, raw_sonar_sensor);
+	//show_var("sonar", 2, raw_sonar_sensor);
 
 	// Controller_I_C* expects value from 0 to 100
-	Controller_I_Co(raw_sonar_sensor);
+	//Controller_I_Co(raw_sonar_sensor);
 	Controller_I_Cd(raw_sensor_right);
 	Controller_I_Cg(raw_sensor_left);
 

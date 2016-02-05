@@ -5,7 +5,7 @@
 #ifndef _Controller_EXT_H_FILE
 #define _Controller_EXT_H_FILE
 
-#define pi 3.14
+#define pi 3.14159265359
 #define kp_teta 2.5
 #define ki_teta 0.05
 
