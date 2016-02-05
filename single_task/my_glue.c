@@ -11,7 +11,7 @@
 #define SONAR_SENSOR NXT_PORT_S2
 
 #define V_MOY 1.2 // m/s
-#define V_MAX 3.2 // 0.3768
+#define V_MAX 3.5  // 0.3768
 
 // from 0-1023 to 0-100
 #define LIGHT_SENSOR_TO_PERCENTAGE(X) ((X)/10.23)
@@ -22,6 +22,9 @@
 DeclareCounter(SysTimerCnt);
 DeclareTask(Task1);
 DeclareResource(lcd);
+
+
+//((x + 1.2) * 100 / 3.5 ) + 10 = 20
 
 /* LEJOS OSEK hook to be invoked from an ISR in category 2 */
 void user_1ms_isr_type2(void) {
@@ -136,8 +139,8 @@ void output_motor(U32 port, _real speed) {
 void Controller_O_u_d(_real ud) {
 	show_var("ud", 5, ud * 100);
 
-	 ud += V_MOY; //(ud < 0 ? -V_MOY : V_MOY);
-	_real Pd = (ud / V_MAX) * 100 + 10; //(ud < 0 ? -10 : 10);
+	 ud += V_MOY;
+	_real Pd = ((ud/V_MAX) * 100) + 10;
 
 	show_var("Pd", 3, Pd);
 
@@ -147,8 +150,8 @@ void Controller_O_u_d(_real ud) {
 void Controller_O_u_g(_real ug) {
 	show_var("ug", 6, ug * 100);
 
-	ug += V_MOY; // (ug < 0 ? -V_MOY : V_MOY);
-	_real Pg = (ug / V_MAX) * 100 + 10; // + (ug < 0 ? -10 : 10);
+	ug += V_MOY;
+	_real Pg = ((ug/V_MAX) * 100) + 10;
 
 	show_var("Pg", 4, Pg);
 
