@@ -93,14 +93,14 @@ void usr_init(void) {
 
 	GetResource(lcd);
 
-	show_string("White calib",0);
+	show_string("White calib", 0);
 	while (!ecrobot_is_ENTER_button_pressed());
 	sens_white_cal_right = ecrobot_get_light_sensor(RIGHT_LIGHT_SENSOR);
 	sens_white_cal_left = ecrobot_get_light_sensor(LEFT_LIGHT_SENSOR);
 
 	systick_wait_ms(1000);
 
-	show_string("Black calib",0);
+	show_string("Black calib", 0);
 	while (!ecrobot_is_ENTER_button_pressed());
 	sens_black_cal_right = ecrobot_get_light_sensor(RIGHT_LIGHT_SENSOR);
 	sens_black_cal_left = ecrobot_get_light_sensor(LEFT_LIGHT_SENSOR);
@@ -136,8 +136,8 @@ void output_motor(U32 port, _real speed) {
 void Controller_O_u_d(_real ud) {
 	show_var("ud", 5, ud * 100);
 
-	 ud = V_MOY + ud;
-	_real Pd = (ud / V_MAX) * 100 + 10;
+	 ud += V_MOY; //(ud < 0 ? -V_MOY : V_MOY);
+	_real Pd = (ud / V_MAX) * 100 + 10; //(ud < 0 ? -10 : 10);
 
 	show_var("Pd", 3, Pd);
 
@@ -147,8 +147,8 @@ void Controller_O_u_d(_real ud) {
 void Controller_O_u_g(_real ug) {
 	show_var("ug", 6, ug * 100);
 
-	ug = V_MOY + ug;
-	_real Pg = (ug / V_MAX) * 100 + 10;
+	ug += V_MOY; // (ug < 0 ? -V_MOY : V_MOY);
+	_real Pg = (ug / V_MAX) * 100 + 10; // + (ug < 0 ? -10 : 10);
 
 	show_var("Pg", 4, Pg);
 
@@ -188,16 +188,25 @@ TASK(Task1) {
 	show_var("raw_left", 1, raw_sensor_left);
 
 	/* Sonar value */
+	static U32 previous_raw_sonar_value = 255;
+
 	U32 raw_sonar_value = ecrobot_get_sonar_sensor(SONAR_SENSOR);
+
+	if (raw_sonar_value < 0)
+		raw_sonar_value = previous_raw_sonar_value;
+	else
+		previous_raw_sonar_value = raw_sonar_value;
+
 	show_var("raw_sonar", 7, raw_sonar_value);
 
 	_float sonar_value = LIMIT_SONAR(raw_sonar_value);
 	show_var("sonar", 2, sonar_value);
 
 	// Controller_I_C* expects value from 0 to 100
-	Controller_I_Co(sonar_value);
 	Controller_I_Cd(raw_sensor_right);
 	Controller_I_Cg(raw_sensor_left);
+	Controller_I_Co(sonar_value);
+
 
 	Controller_step();
 

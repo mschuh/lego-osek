@@ -137,7 +137,7 @@ void Controller_step(){
    } else {
       L6 = ctx.M10;
    }
-   L11 = (ctx._Co < 5.000000); // distance for obstacle detection, default = 20
+   L11 = (ctx._Co < 10.000000); // distance for obstacle detection, default = 20
    L5 = (L6 || L11);
    if (ctx.M7) {
       L14 = _false;
@@ -176,12 +176,12 @@ void Controller_step(){
    L35 = (L36 + L52);
    L31 = (L32 * L35);
    if (L4) {
-      L3 = 0.100000;
+      L3 = (-0.880000); // 0.100000 -- 1,3
    } else {
       L3 = L31;
    }
    Controller_O_u_d(L3);
-   L64 = (- 0.100000);
+   L64 = (- 2.160000); //-0.100000 -- 1,744
    L67 = (- L36);
    L66 = (L67 + L52);
    L65 = (L32 * L66);
@@ -200,7 +200,7 @@ void Controller_step(){
    }
    L18 = (L19 || L21);
    L17 = (L18 && L13);
-   L26 = (ctx._Cg <= 10.000000);
+   L26 = (ctx._Cg <= 35.000000);
    if (ctx.M7) {
       L28 = _false;
    } else {
