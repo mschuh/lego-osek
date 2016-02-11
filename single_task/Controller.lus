@@ -1,7 +1,12 @@
 -- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
--- Fri Feb  5 14:53:31 2016
+-- Thu Feb 11 16:38:46 2016
 const kp_teta : real;
+const white_treshold : real;
+const rotate_speed_neg : real;
+const obstacle_treshold : real;
 const pi : real;
+const black_treshold : real;
+const rotate_speed : real;
 const ki_teta : real;
 node Controller(Cg: real; Cd: real; Co: real) returns (u_d: real; u_g: real);
 var
@@ -22,7 +27,7 @@ var
 let
    u_d = w_005;
    w_010 = Cg;
-   w_000 = 0.1;
+   w_000 = rotate_speed;
    w_009 = WBW(w_010, w_008);
    w_007 = Co;
    w_002 = Obstacle_detector(w_007, w_008);
@@ -33,7 +38,7 @@ let
    u_g = w_003;
    w_008 = (false -> (pre w_009));
    w_005 = (if w_002 then w_000 else w_006);
-   w_001 = (- 0.1);
+   w_001 = rotate_speed_neg;
 tel
 node Subsystem(eps_theta: real; eps_d: real) returns (u_d: real; u_g: real);
 var
@@ -101,7 +106,7 @@ let
    w_002 = FF_03(w_000, w_001);
    w_003 = Co;
    w_001 = R;
-   w_000 = (w_003 < 20.0);
+   w_000 = (w_003 < obstacle_treshold);
    obstacle_detected = w_002;
 tel
 node WBW(Cg: real; R: bool) returns (WBW: bool);
@@ -151,7 +156,7 @@ let
    Out1 = w_003;
    w_003 = FF_02(w_000, w_002);
    w_002 = R;
-   w_000 = (w_001 <= 10.0);
+   w_000 = (w_001 <= black_treshold);
 tel
 node white1(Cg: real; R: bool) returns (Out1: bool);
 var
@@ -164,7 +169,7 @@ let
    Out1 = w_003;
    w_003 = FF(w_000, w_002);
    w_002 = R;
-   w_000 = (w_001 >= 90.0);
+   w_000 = (w_001 >= white_treshold);
 tel
 node white0(Cg: real; R: bool) returns (Out1: bool);
 var
@@ -177,7 +182,7 @@ let
    Out1 = w_003;
    w_003 = FF_01(w_000, w_002);
    w_002 = R;
-   w_000 = (w_001 >= 90.0);
+   w_000 = (w_001 <= white_treshold);
 tel
 node FF_02(S: bool; R: bool) returns (Q: bool);
 var

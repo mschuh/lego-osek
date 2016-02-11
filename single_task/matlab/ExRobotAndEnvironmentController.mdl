@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.253"
+    ComputedModelVersion    "1.255"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [2.0, 51.0, 1916.0, 1000.0]
+      Location		      [2.0, 52.0, 1916.0, 999.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -54,9 +54,9 @@ Model {
 	IsActive		[1]
 	ViewObjType		"SimulinkSubsys"
 	LoadSaveID		"147"
-	Extents			[1681.0, 823.0]
+	Extents			[1685.0, 844.0]
 	ZoomFactor		[1.1352380952380954]
-	Offset			[-52.875838926174652, -48.743683874957036]
+	Offset			[-52.875838926174652, -48.743683874957014]
       }
     }
   }
@@ -64,11 +64,11 @@ Model {
   Creator		  "alex"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "schuhm"
+  LastModifiedBy	  "mullermj"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Dec 16 18:36:52 2015"
-  RTWModifiedTimeStamp	  372190927
-  ModelVersionFormat	  "1.%<AutoIncrement:253>"
+  LastModifiedDate	  "Thu Feb 11 16:27:13 2016"
+  RTWModifiedTimeStamp	  377108783
+  ModelVersionFormat	  "1.%<AutoIncrement:255>"
   ConfigurationManager	  "none"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -1050,7 +1050,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "617"
+    SIDHighWatermark	    "618"
     Block {
       BlockType		      SubSystem
       Name		      "Controller"
@@ -1063,7 +1063,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Controller"
-	Location		[2, 51, 1918, 1051]
+	Location		[2, 52, 1918, 1051]
 	Open			on
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200
@@ -1113,7 +1113,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "Calcul ecart"
-	    Location		    [2, 51, 1922, 1081]
+	    Location		    [2, 52, 1918, 1051]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -1266,7 +1266,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "Obstacle detector"
-	    Location		    [2, 51, 1918, 1051]
+	    Location		    [2, 52, 1918, 1051]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -1311,7 +1311,7 @@ Model {
 	      SourceType	      "Compare To Constant"
 	      ContentPreviewEnabled   off
 	      relop		      "<"
-	      const		      "20"
+	      const		      "obstacle_treshold"
 	      OutDataTypeStr	      "boolean"
 	      ZeroCross		      on
 	    }
@@ -1523,7 +1523,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "Subsystem"
-	    Location		    [2, 51, 1918, 1051]
+	    Location		    [2, 52, 1918, 1051]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -1988,7 +1988,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "WBW"
-	    Location		    [2, 51, 1918, 1051]
+	    Location		    [2, 52, 1918, 1051]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -2048,7 +2048,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"black"
-		Location		[2, 51, 1922, 1081]
+		Location		[2, 52, 1918, 1051]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -2090,7 +2090,7 @@ Model {
 		  SourceType		  "Compare To Constant"
 		  ContentPreviewEnabled	  off
 		  relop			  "<="
-		  const			  "10"
+		  const			  "black_treshold"
 		  OutDataTypeStr	  "boolean"
 		  ZeroCross		  on
 		}
@@ -2291,7 +2291,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"white0"
-		Location		[2, 51, 1918, 1051]
+		Location		[2, 52, 1918, 1051]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -2324,16 +2324,16 @@ Model {
 		Block {
 		  BlockType		  Reference
 		  Name			  "Compare\nTo Constant"
-		  SID			  "500"
+		  SID			  "618"
 		  Ports			  [1, 1]
 		  Position		  [135, 70, 165, 100]
-		  ZOrder		  10
+		  ZOrder		  21
 		  LibraryVersion	  "1.287"
 		  SourceBlock		  "simulink/Logic and Bit\nOperations/Compare\nTo Constant"
 		  SourceType		  "Compare To Constant"
 		  ContentPreviewEnabled	  off
-		  relop			  ">="
-		  const			  "90"
+		  relop			  "<="
+		  const			  "white_treshold"
 		  OutDataTypeStr	  "boolean"
 		  ZeroCross		  on
 		}
@@ -2508,14 +2508,14 @@ Model {
 		  DstPort		  2
 		}
 		Line {
-		  ZOrder		  44
+		  ZOrder		  48
 		  SrcBlock		  "Cg"
 		  SrcPort		  1
 		  DstBlock		  "Compare\nTo Constant"
 		  DstPort		  1
 		}
 		Line {
-		  ZOrder		  47
+		  ZOrder		  49
 		  SrcBlock		  "Compare\nTo Constant"
 		  SrcPort		  1
 		  Points		  [47, 0; 0, 20]
@@ -2534,7 +2534,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"white1"
-		Location		[2, 51, 1922, 1081]
+		Location		[2, 52, 1918, 1051]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -2576,7 +2576,7 @@ Model {
 		  SourceType		  "Compare To Constant"
 		  ContentPreviewEnabled	  off
 		  relop			  ">="
-		  const			  "90"
+		  const			  "white_treshold"
 		  OutDataTypeStr	  "boolean"
 		  ZeroCross		  on
 		}
@@ -2875,7 +2875,7 @@ Model {
 	  SID			  "529"
 	  Position		  [500, 210, 530, 240]
 	  ZOrder		  25
-	  Value			  "0.1"
+	  Value			  "rotate_speed"
 	}
 	Block {
 	  BlockType		  Constant
@@ -2884,7 +2884,7 @@ Model {
 	  Position		  [500, 390, 530, 420]
 	  ZOrder		  27
 	  NamePlacement		  "alternate"
-	  Value			  "-0.1"
+	  Value			  "rotate_speed_neg"
 	}
 	Block {
 	  BlockType		  Outport
@@ -2978,10 +2978,6 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  FontName		  "Helvetica"
-	  FontSize		  9
-	  FontWeight		  "normal"
-	  FontAngle		  "normal"
 	  ZOrder		  83
 	  SrcBlock		  "Subsystem"
 	  SrcPort		  1
@@ -2997,10 +2993,6 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  FontName		  "Helvetica"
-	  FontSize		  9
-	  FontWeight		  "normal"
-	  FontAngle		  "normal"
 	  ZOrder		  79
 	  SrcBlock		  "Subsystem"
 	  SrcPort		  2
@@ -3033,10 +3025,6 @@ Model {
 	  }
 	}
 	Line {
-	  FontName		  "Helvetica"
-	  FontSize		  9
-	  FontWeight		  "normal"
-	  FontAngle		  "normal"
 	  ZOrder		  80
 	  SrcBlock		  "u_g_turn"
 	  SrcPort		  1
@@ -3045,10 +3033,6 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  FontName		  "Helvetica"
-	  FontSize		  9
-	  FontWeight		  "normal"
-	  FontAngle		  "normal"
 	  ZOrder		  84
 	  SrcBlock		  "u_d_turn"
 	  SrcPort		  1

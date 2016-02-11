@@ -11,7 +11,7 @@
 #define SONAR_SENSOR NXT_PORT_S2
 
 #define V_MOY 1.2 // m/s
-#define V_MAX 3.5  // 0.3768
+#define V_MAX 3.5
 
 // from 0-1023 to 0-100
 #define LIGHT_SENSOR_TO_PERCENTAGE(X) ((X)/10.23)
@@ -22,9 +22,6 @@
 DeclareCounter(SysTimerCnt);
 DeclareTask(Task1);
 DeclareResource(lcd);
-
-
-//((x + 1.2) * 100 / 3.5 ) + 10 = 20
 
 /* LEJOS OSEK hook to be invoked from an ISR in category 2 */
 void user_1ms_isr_type2(void) {
@@ -133,7 +130,7 @@ void output_motor(U32 port, _real speed) {
 		speed_percent = (int)speed;
 	}
 
-	ecrobot_set_motor_speed(port, speed_percent); // brake mode = 0 (float?)
+	ecrobot_set_motor_speed(port, speed_percent);
 }
 
 void Controller_O_u_d(_real ud) {
