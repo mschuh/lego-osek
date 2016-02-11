@@ -155,6 +155,7 @@ void Controller_O_u_g(_real ug) {
 
 	show_var("Pg", 4, Pg);
 
+
 	output_motor(LEFT_WHEEL_PORT, Pg);
 }
 
