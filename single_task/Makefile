@@ -1,5 +1,5 @@
 ## application's name
-TARGET=controller
+TARGET=ctrl_single
 
 ## folders where C files are located
 USR_PATH=.

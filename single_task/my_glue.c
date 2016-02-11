@@ -10,12 +10,11 @@
 #define LEFT_LIGHT_SENSOR NXT_PORT_S4
 #define SONAR_SENSOR NXT_PORT_S2
 
-#define V_MOY 1.2 // m/s
+//empirical constants used to adjust motor output
+#define V_MOY 1.2
 #define V_MAX 3.5
 
-// from 0-1023 to 0-100
-#define LIGHT_SENSOR_TO_PERCENTAGE(X) ((X)/10.23)
-
+// from 0-255 to 0-100
 #define LIMIT_SONAR(X) ((X)/2.56)
 
 /* OSEK declarations */
@@ -31,44 +30,6 @@ void user_1ms_isr_type2(void) {
 	if(ercd != E_OK) {
 		ShutdownOS(ercd);
 	}
-}
-
-static int mycounter;
-static int sens_white_cal_right;
-static int sens_white_cal_left;
-static int sens_black_cal_right;
-static int sens_black_cal_left;
-
-void show_var(char* varname, int line, int value) {
-	GetResource(lcd);
-	int l;
-	display_goto_xy(0, line);
-	display_string(varname);
-	l = strlen(varname);
-	display_goto_xy(l, line);
-	display_int(value, 4);
-	display_goto_xy(0, line+1);
-	display_update();
-	ReleaseResource(lcd);
-}
-
-void show_string(char* varname, int line) {
-	GetResource(lcd);
-	display_goto_xy(0, line);
-	display_string(varname);
-	display_goto_xy(0, line+1);
-	display_update();
-	ReleaseResource(lcd);
-}
-
-void reset_lcd() {
-	GetResource(lcd);
-	for (int i = 0; i < 10; i++) {
-		display_goto_xy(0, i);
-		display_string("                ");
-	}
-	display_update();
-	ReleaseResource(lcd);
 }
 
 void ecrobot_device_initialize() {
@@ -88,8 +49,70 @@ void ecrobot_device_terminate() {
 	ecrobot_set_motor_speed(LEFT_WHEEL_PORT, 0);
 }
 
+/*------------------------------
+	Déclarations
+--------------------------------
+On met typiquement ici les déclarations
+de variables partagées, de fonctions
+accessoires etc.
+------------------------------*/
+static int sens_white_cal_right;
+static int sens_white_cal_left;
+static int sens_black_cal_right;
+static int sens_black_cal_left;
+
+/* utilitaire : affichage d'une variable.
+L'affichage DOIT être réalisé en exclusion
+mutuelle.
+D'où l'utilisation du verrou "lcd"
+fourni par le noyau temps réel (cf. kernel_cfg.h)
+*/
+void show_var(char* varname, int line, int value) {
+	GetResource(lcd);
+	int l;
+	display_goto_xy(0, line);
+	display_string(varname);
+	l = strlen(varname);
+	display_goto_xy(l, line);
+	display_int(value, 4);
+	display_goto_xy(0, line+1);
+	display_update();
+	ReleaseResource(lcd);
+}
+
+/* utilitaire : affichage d'une string */
+void show_string(char* varname, int line) {
+	GetResource(lcd);
+	display_goto_xy(0, line);
+	display_string(varname);
+	display_goto_xy(0, line+1);
+	display_update();
+	ReleaseResource(lcd);
+}
+
+/* utilitaire : nettoyage de l'écran */
+void reset_lcd() {
+	GetResource(lcd);
+	for (int i = 0; i < 10; i++) {
+		display_goto_xy(0, i);
+		display_string("                ");
+	}
+	display_update();
+	ReleaseResource(lcd);
+}
+
+/*------------------------------
+	Initialisations
+--------------------------------
+On doit se débrouiller pour que NOS initialisations
+soient effectuées. Comme on ne veut PAS TOUCHER
+une seule ligne au code OSEK, on utilise un kernel_cfg.c
+modifié, où une nouvelle fonction, "usr_init()", est
+appelée à l'initialisation du système.
+CETTE FONCTION DOIT ÊTRE DÉFINIE
+(vide éventuellement)
+------------------------------*/
 void usr_init(void) {
-	// calibration
 
 	GetResource(lcd);
 
@@ -119,6 +142,18 @@ void usr_init(void) {
 	ReleaseResource(lcd);
 }
 
+/* Limits the PWM value sent to the servo motor
+between -100 and 100 (limits defined by the API)
+and actually controls the motor with this value
+by calling ecrobot_set_motor_speed
+
+Parameters
+	port: NXT_PORT_A, NXT_PORT_B, NXT_PORT_C
+	speed : theorically between -100 and 100
+
+Returns
+	None 
+*/ 
 void output_motor(U32 port, _real speed) {
 	int speed_percent;
 
@@ -133,6 +168,17 @@ void output_motor(U32 port, _real speed) {
 	ecrobot_set_motor_speed(port, speed_percent);
 }
 
+/* Receives the output of the controller and
+do the necessary empirical adjustements with
+V_MAX and V_AVG in order to give a smoother
+movement to the robot.
+
+Parameters
+	ud: right output value of the Controller system
+
+Returns
+	None 
+*/ 
 void Controller_O_u_d(_real ud) {
 	show_var("ud", 5, ud * 100);
 
@@ -144,6 +190,17 @@ void Controller_O_u_d(_real ud) {
 	output_motor(RIGHT_WHEEL_PORT, Pd);
 }
 
+/* Receives the output of the controller and
+do the necessary empirical adjustements with
+V_MAX and V_AVG in order to give a smoother
+movement to the robot.
+
+Parameters
+	ug: left output value of the Controller system
+
+Returns
+	None 
+*/ 
 void Controller_O_u_g(_real ug) {
 	show_var("ug", 6, ug * 100);
 
@@ -156,11 +213,18 @@ void Controller_O_u_g(_real ug) {
 	output_motor(LEFT_WHEEL_PORT, Pg);
 }
 
+/* Task1: Controller
+
+Reads the light and sonar sensor values, uses the 
+calibration to adjust them between 0 and 100 and 
+finally calls the Controller system sending these
+values as parameters.
+*/
 TASK(Task1) {
 	U16 raw_sensor_right;
 	U16 raw_sensor_left;
 
-	// returns 0 to 1023
+	/* Light sensors reading */
 	raw_sensor_right = ecrobot_get_light_sensor(RIGHT_LIGHT_SENSOR);
 	raw_sensor_left = ecrobot_get_light_sensor(LEFT_LIGHT_SENSOR);
 
@@ -188,7 +252,7 @@ TASK(Task1) {
 	show_var("raw_right", 0, raw_sensor_right);
 	show_var("raw_left", 1, raw_sensor_left);
 
-	/* Sonar value */
+	/* Sonar sensor reading */
 	static U32 previous_raw_sonar_value = 255;
 
 	U32 raw_sonar_value = ecrobot_get_sonar_sensor(SONAR_SENSOR);
@@ -207,8 +271,6 @@ TASK(Task1) {
 	Controller_I_Cd(raw_sensor_right);
 	Controller_I_Cg(raw_sensor_left);
 	Controller_I_Co(sonar_value);
-
-
 	Controller_step();
 
 	TerminateTask(); // don't change

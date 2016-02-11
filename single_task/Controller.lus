@@ -1,5 +1,5 @@
 -- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
--- Thu Feb 11 16:38:46 2016
+-- Thu Feb 11 18:42:29 2016
 const kp_teta : real;
 const white_treshold : real;
 const rotate_speed_neg : real;
