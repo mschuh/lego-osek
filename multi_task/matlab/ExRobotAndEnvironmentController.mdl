@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.250"
+    ComputedModelVersion    "1.252"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [2.0, 51.0, 1916.0, 1000.0]
+      Location		      [2.0, 52.0, 1916.0, 999.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -53,10 +53,10 @@ Model {
 	$ClassName		"Simulink.EditorInfo"
 	IsActive		[1]
 	ViewObjType		"SimulinkSubsys"
-	LoadSaveID		"667"
-	Extents			[1685.0, 853.0]
+	LoadSaveID		"147"
+	Extents			[1681.0, 813.0]
 	ZoomFactor		[1.14]
-	Offset			[0.0, 0.0]
+	Offset			[0.0, 1.1368683772161603e-13]
       }
     }
   }
@@ -64,11 +64,11 @@ Model {
   Creator		  "alex"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "dienstmf"
+  LastModifiedBy	  "schuhm"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Dec 01 16:19:58 2015"
-  RTWModifiedTimeStamp	  370887593
-  ModelVersionFormat	  "1.%<AutoIncrement:250>"
+  LastModifiedDate	  "Thu Feb 11 14:41:00 2016"
+  RTWModifiedTimeStamp	  377102453
+  ModelVersionFormat	  "1.%<AutoIncrement:252>"
   ConfigurationManager	  "none"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -1036,7 +1036,7 @@ Model {
   }
   System {
     Name		    "ExRobotAndEnvironmentController"
-    Location		    [2, 51, 1918, 1051]
+    Location		    [2, 52, 1918, 1051]
     Open		    off
     ModelBrowserVisibility  on
     ModelBrowserWidth	    200
@@ -1050,7 +1050,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "672"
+    SIDHighWatermark	    "676"
     Block {
       BlockType		      SubSystem
       Name		      "Controller"
@@ -1063,8 +1063,8 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Controller"
-	Location		[2, 51, 1918, 1051]
-	Open			off
+	Location		[2, 52, 1918, 1051]
+	Open			on
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1106,17 +1106,39 @@ Model {
 	  OutDataTypeStr	  "double"
 	}
 	Block {
+	  BlockType		  Switch
+	  Name			  "Switch"
+	  SID			  "673"
+	  Position		  [895, 270, 945, 310]
+	  ZOrder		  33
+	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
+	  Criteria		  "u2 ~= 0"
+	  InputSameDT		  off
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Switch
+	  Name			  "Switch1"
+	  SID			  "674"
+	  Position		  [895, 340, 945, 380]
+	  ZOrder		  35
+	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
+	  Criteria		  "u2 ~= 0"
+	  InputSameDT		  off
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
 	  BlockType		  SubSystem
 	  Name			  "motor_control"
 	  SID			  "667"
-	  Ports			  [3, 2]
-	  Position		  [555, 277, 645, 343]
+	  Ports			  [2, 2]
+	  Position		  [525, 239, 615, 306]
 	  ZOrder		  32
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "motor_control"
-	    Location		    [2, 51, 1918, 1051]
-	    Open		    on
+	    Location		    [2, 52, 1918, 1051]
+	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1148,16 +1170,6 @@ Model {
 	      OutDataTypeStr	      "double"
 	    }
 	    Block {
-	      BlockType		      Inport
-	      Name		      "obstacle"
-	      SID		      "670"
-	      Position		      [20, 163, 50, 177]
-	      ZOrder		      31
-	      Port		      "3"
-	      IconDisplay	      "Port number"
-	      OutDataTypeStr	      "boolean"
-	    }
-	    Block {
 	      BlockType		      SubSystem
 	      Name		      "Calcul ecart"
 	      SID		      "480"
@@ -1168,7 +1180,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"Calcul ecart"
-		Location		[2, 51, 1918, 1051]
+		Location		[2, 52, 1918, 1051]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -1748,51 +1760,10 @@ Model {
 	      }
 	    }
 	    Block {
-	      BlockType		      Switch
-	      Name		      "Switch"
-	      SID		      "511"
-	      Position		      [675, 75, 725, 115]
-	      ZOrder		      13
-	      ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
-	      Criteria		      "u2 ~= 0"
-	      InputSameDT	      off
-	      SaturateOnIntegerOverflow	off
-	    }
-	    Block {
-	      BlockType		      Switch
-	      Name		      "Switch1"
-	      SID		      "530"
-	      Position		      [675, 145, 725, 185]
-	      ZOrder		      26
-	      ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
-	      Criteria		      "u2 ~= 0"
-	      InputSameDT	      off
-	      SaturateOnIntegerOverflow	off
-	    }
-	    Block {
-	      BlockType		      Constant
-	      Name		      "u_d_turn"
-	      SID		      "529"
-	      Position		      [530, 20, 560, 50]
-	      ZOrder		      25
-	      ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
-	      Value		      "10"
-	    }
-	    Block {
-	      BlockType		      Constant
-	      Name		      "u_g_turn"
-	      SID		      "531"
-	      Position		      [530, 135, 560, 165]
-	      ZOrder		      27
-	      ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
-	      NamePlacement	      "alternate"
-	      Value		      "-10"
-	    }
-	    Block {
 	      BlockType		      Outport
 	      Name		      "u_d"
 	      SID		      "671"
-	      Position		      [785, 88, 815, 102]
+	      Position		      [470, 58, 500, 72]
 	      ZOrder		      32
 	      ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
 	      IconDisplay	      "Port number"
@@ -1802,29 +1773,12 @@ Model {
 	      BlockType		      Outport
 	      Name		      "u_g"
 	      SID		      "672"
-	      Position		      [785, 158, 815, 172]
+	      Position		      [470, 113, 500, 127]
 	      ZOrder		      33
 	      ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      OutDataTypeStr	      "double"
-	    }
-	    Line {
-	      ZOrder		      141
-	      SrcBlock		      "obstacle"
-	      SrcPort		      1
-	      Points		      [9, 0; 0, 44; 539, 0; 0, -49]
-	      Branch {
-		ZOrder			136
-		Points			[0, -70]
-		DstBlock		"Switch"
-		DstPort			2
-	      }
-	      Branch {
-		ZOrder			135
-		DstBlock		"Switch1"
-		DstPort			2
-	      }
 	    }
 	    Line {
 	      ZOrder		      3
@@ -1858,48 +1812,19 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      83
+	      ZOrder		      154
 	      SrcBlock		      "Subsystem"
 	      SrcPort		      1
-	      Points		      [173, 0; 0, 30]
-	      DstBlock		      "Switch"
-	      DstPort		      3
-	    }
-	    Line {
-	      ZOrder		      142
-	      SrcBlock		      "Switch"
-	      SrcPort		      1
+	      Points		      [28, 0; 0, -15]
 	      DstBlock		      "u_d"
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      79
+	      ZOrder		      155
 	      SrcBlock		      "Subsystem"
 	      SrcPort		      2
-	      Points		      [39, 0; 0, 75]
-	      DstBlock		      "Switch1"
-	      DstPort		      3
-	    }
-	    Line {
-	      ZOrder		      143
-	      SrcBlock		      "Switch1"
-	      SrcPort		      1
+	      Points		      [28, 0; 0, 15]
 	      DstBlock		      "u_g"
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      80
-	      SrcBlock		      "u_g_turn"
-	      SrcPort		      1
-	      DstBlock		      "Switch1"
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      84
-	      SrcBlock		      "u_d_turn"
-	      SrcPort		      1
-	      Points		      [64, 0; 0, 45]
-	      DstBlock		      "Switch"
 	      DstPort		      1
 	    }
 	  }
@@ -1914,7 +1839,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "obst_detector"
-	    Location		    [2, 51, 1918, 1051]
+	    Location		    [2, 52, 1918, 1051]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -1957,7 +1882,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"Obstacle detector"
-		Location		[2, 51, 1918, 1051]
+		Location		[2, 52, 1918, 1051]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -2003,7 +1928,7 @@ Model {
 		  SourceType		  "Compare To Constant"
 		  ContentPreviewEnabled	  off
 		  relop			  "<"
-		  const			  "20"
+		  const			  "10"
 		  OutDataTypeStr	  "boolean"
 		  ZeroCross		  on
 		}
@@ -2217,7 +2142,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"WBW"
-		Location		[2, 51, 1918, 1051]
+		Location		[2, 52, 1918, 1051]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -2279,7 +2204,7 @@ Model {
 		  RequestExecContextInheritance	off
 		  System {
 		    Name		    "black"
-		    Location		    [2, 51, 1918, 1051]
+		    Location		    [2, 52, 1918, 1051]
 		    Open		    off
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    200
@@ -2321,7 +2246,7 @@ Model {
 		    SourceType		    "Compare To Constant"
 		    ContentPreviewEnabled   off
 		    relop		    "<="
-		    const		    "10"
+		    const		    "35"
 		    OutDataTypeStr	    "boolean"
 		    ZeroCross		    on
 		    }
@@ -2522,7 +2447,7 @@ Model {
 		  RequestExecContextInheritance	off
 		  System {
 		    Name		    "white0"
-		    Location		    [2, 51, 1918, 1051]
+		    Location		    [2, 52, 1918, 1051]
 		    Open		    off
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    200
@@ -3160,10 +3085,29 @@ Model {
 	  }
 	}
 	Block {
+	  BlockType		  Constant
+	  Name			  "u_d_turn"
+	  SID			  "675"
+	  Position		  [750, 215, 780, 245]
+	  ZOrder		  34
+	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
+	  Value			  "0.1"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "u_g_turn"
+	  SID			  "676"
+	  Position		  [750, 330, 780, 360]
+	  ZOrder		  36
+	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
+	  NamePlacement		  "alternate"
+	  Value			  "-0.1"
+	}
+	Block {
 	  BlockType		  Outport
 	  Name			  "u_d"
 	  SID			  "478"
-	  Position		  [805, 273, 835, 287]
+	  Position		  [1000, 268, 1030, 282]
 	  ZOrder		  -5
 	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
 	  IconDisplay		  "Port number"
@@ -3173,7 +3117,7 @@ Model {
 	  BlockType		  Outport
 	  Name			  "u_g"
 	  SID			  "479"
-	  Position		  [805, 343, 835, 357]
+	  Position		  [1010, 353, 1040, 367]
 	  ZOrder		  -6
 	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
 	  Port			  "2"
@@ -3184,16 +3128,15 @@ Model {
 	  ZOrder		  139
 	  SrcBlock		  "Cg"
 	  SrcPort		  1
-	  Points		  [66, 0]
+	  Points		  [66, 0; 0, 5]
 	  Branch {
 	    ZOrder		    147
-	    Points		    [0, 140]
+	    Points		    [0, 135]
 	    DstBlock		    "obst_detector"
 	    DstPort		    2
 	  }
 	  Branch {
 	    ZOrder		    146
-	    Points		    [162, 0; 0, 40]
 	    DstBlock		    "motor_control"
 	    DstPort		    1
 	  }
@@ -3202,24 +3145,9 @@ Model {
 	  ZOrder		  140
 	  SrcBlock		  "Cd"
 	  SrcPort		  1
+	  Points		  [148, 0; 0, -20]
 	  DstBlock		  "motor_control"
 	  DstPort		  2
-	}
-	Line {
-	  ZOrder		  144
-	  SrcBlock		  "obst_detector"
-	  SrcPort		  1
-	  Points		  [44, 0; 0, -45]
-	  DstBlock		  "motor_control"
-	  DstPort		  3
-	}
-	Line {
-	  ZOrder		  142
-	  SrcBlock		  "motor_control"
-	  SrcPort		  1
-	  Points		  [50, 0; 0, -15]
-	  DstBlock		  "u_d"
-	  DstPort		  1
 	}
 	Line {
 	  ZOrder		  145
@@ -3229,10 +3157,65 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  154
+	  ZOrder		  144
+	  SrcBlock		  "obst_detector"
+	  SrcPort		  1
+	  Points		  [44, 0; 0, 37; 499, 0; 0, -52]
+	  Branch {
+	    ZOrder		    156
+	    Points		    [0, -70]
+	    DstBlock		    "Switch"
+	    DstPort		    2
+	  }
+	  Branch {
+	    ZOrder		    155
+	    DstBlock		    "Switch1"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  ZOrder		  166
+	  SrcBlock		  "motor_control"
+	  SrcPort		  1
+	  Points		  [89, 0; 0, 50]
+	  DstBlock		  "Switch"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  168
 	  SrcBlock		  "motor_control"
 	  SrcPort		  2
-	  Points		  [49, 0; 0, 20]
+	  Points		  [42, 0; 0, 85]
+	  DstBlock		  "Switch1"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  160
+	  SrcBlock		  "u_g_turn"
+	  SrcPort		  1
+	  DstBlock		  "Switch1"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  161
+	  SrcBlock		  "u_d_turn"
+	  SrcPort		  1
+	  Points		  [64, 0; 0, 45]
+	  DstBlock		  "Switch"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  169
+	  SrcBlock		  "Switch"
+	  SrcPort		  1
+	  Points		  [23, 0; 0, -15]
+	  DstBlock		  "u_d"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  170
+	  SrcBlock		  "Switch1"
+	  SrcPort		  1
 	  DstBlock		  "u_g"
 	  DstPort		  1
 	}
@@ -3249,7 +3232,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Environment"
-	Location		[2, 51, 1922, 1081]
+	Location		[2, 52, 1918, 1051]
 	Open			off
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200

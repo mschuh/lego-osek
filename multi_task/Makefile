@@ -1,5 +1,5 @@
 ## application's name
-TARGET=controller_multi
+TARGET=ctrl_multi
 
 ## folders where C files are located
 USR_PATH=.
@@ -31,5 +31,6 @@ motor_control.c: motor_control.lus
 	lus2c motor_control.lus motor_control -ctx-static
 
 clear: clean
-	rm -rf *.xml obst_detector.lus obst_detector.c obst_detector.h \
-	motor_control.lus motor_control.c motor_control.h *.ec *.mws build
+	rm -rf *.xml *.rxe *.bin *.ec *.mws obst_detector.lus obst_detector.c obst_detector.h motor_control.lus motor_control.c motor_control.h build 
+	
+
