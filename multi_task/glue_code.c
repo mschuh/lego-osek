@@ -250,6 +250,43 @@ TASK(HighTask) {
 }
 
 TASK(LowTask) {
-	
+	/* Sonar value */
+	static U32 previous_raw_sonar_value = 255;
+	U16 raw_sensor_left;
+
+
+
+	raw_sensor_left = ecrobot_get_light_sensor(LEFT_LIGHT_SENSOR);
+
+	if (raw_sensor_left < sens_white_cal_left) {
+		raw_sensor_left = sens_white_cal_left;
+	} else if (raw_sensor_left > sens_black_cal_left) {
+		raw_sensor_left = sens_black_cal_left;
+	}
+
+	raw_sensor_left = ((raw_sensor_left - sens_white_cal_left) * 100 /
+				(sens_black_cal_left - sens_white_cal_left));
+
+	show_var("raw_left", 1, raw_sensor_left);
+
+
+
+	U32 raw_sonar_value = ecrobot_get_sonar_sensor(SONAR_SENSOR);
+
+	if (raw_sonar_value < 0)
+		raw_sonar_value = previous_raw_sonar_value;
+	else
+		previous_raw_sonar_value = raw_sonar_value;
+
+	show_var("raw_sonar", 7, raw_sonar_value);
+
+	_float sonar_value = LIMIT_SONAR(raw_sonar_value);
+	show_var("sonar", 2, sonar_value);
+
+	obst_detector_I_Co(sonar_value);
+	obst_detector_I_Cg(raw_sensor_left);
+
+	obst_detector_step();
+
 	TerminateTask();
 }
