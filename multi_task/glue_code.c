@@ -1,18 +1,7 @@
-/*
-Exemple de code glue pour deux tâches périodiques
-- une supposée rapide et frequente et qui doit s'appeler HighTask
-- une supposée lente et moins fréquente et qui doit s'appeler LowTask
-- les périodes doivent être spécifiées dans "periods.h"
-	HIGH_PERIOD
-	LOW_PERIOD
-*/
-
 #include "kernel.h"
 #include "periods.h"
 #include "kernel_id.h"
 #include "ecrobot_interface.h"
-
-/**** CODE GLUE, A MODIFIER/ADAPTER */
 #include <string.h>  /* a cause du strlen plus bas */
 #include "motor_control.h"
 #include "obst_detector.h"
@@ -23,12 +12,11 @@ Exemple de code glue pour deux tâches périodiques
 #define LEFT_LIGHT_SENSOR NXT_PORT_S4
 #define SONAR_SENSOR NXT_PORT_S2
 
-#define V_MOY 1.2 // m/s
-#define V_MAX 3.5  // 0.3768
+//empirical constants used to adjust motor output
+#define V_AVG 1.2
+#define V_MAX 3.5
 
-// from 0-1023 to 0-100
-#define LIGHT_SENSOR_TO_PERCENTAGE(X) ((X)/10.23)
-
+// from 0-255 to 0-100
 #define LIMIT_SONAR(X) ((X)/2.56)
 
 /***** OSEK : NE PAS MODIFIER */
@@ -50,12 +38,12 @@ void user_1ms_isr_type2(void)
 
 /* Initialisation et finalisations OSEK */
 void ecrobot_device_initialize() {
-	motor_control_reset();
-	obst_detector_reset();
-
+	ecrobot_init_sonar_sensor(SONAR_SENSOR);
 	ecrobot_set_light_sensor_active(RIGHT_LIGHT_SENSOR);
 	ecrobot_set_light_sensor_active(LEFT_LIGHT_SENSOR);
-	ecrobot_init_sonar_sensor(SONAR_SENSOR);
+
+	motor_control_reset();
+	obst_detector_reset();
 }
 
 void ecrobot_device_terminate() {
@@ -66,8 +54,6 @@ void ecrobot_device_terminate() {
 	ecrobot_set_motor_speed(RIGHT_WHEEL_PORT, 0);
 	ecrobot_set_motor_speed(LEFT_WHEEL_PORT, 0);
 }
-
-/**** CODE GLUE, A MODIFIER/ADAPTER */
 
 /*------------------------------
 	Déclarations
@@ -81,18 +67,7 @@ static int sens_white_cal_right;
 static int sens_white_cal_left;
 static int sens_black_cal_right;
 static int sens_black_cal_left;
-
-/*------------------------------
-	Initialisations
---------------------------------
-On doit se débrouiller pour que NOS initialisations
-soient effectuées. Comme on ne veut PAS TOUCHER
-une seule ligne au code OSEK, on utilise un kernel_cfg.c
-modifié, où une nouvelle fonction, "usr_init()", est
-appelée à l'initialisation du système.
-CETTE FONCTION DOIT ÊTRE DÉFINIE
-(vide éventuellement)
-------------------------------*/
+static _boolean multi_task_obst = 0;
 
 /* utilitaire : affichage d'une variable.
 L'affichage DOIT être réalisé en exclusion
@@ -113,6 +88,7 @@ void show_var(char* varname, int line, int value) {
 	ReleaseResource(lcd);
 }
 
+/* utilitaire : affichage d'une string */
 void show_string(char* varname, int line) {
 	GetResource(lcd);
 	display_goto_xy(0, line);
@@ -122,6 +98,7 @@ void show_string(char* varname, int line) {
 	ReleaseResource(lcd);
 }
 
+/* utilitaire : nettoyage de l'écran */
 void reset_lcd() {
 	GetResource(lcd);
 	for (int i = 0; i < 10; i++) {
@@ -132,6 +109,17 @@ void reset_lcd() {
 	ReleaseResource(lcd);
 }
 
+/*------------------------------
+	Initialisations
+--------------------------------
+On doit se débrouiller pour que NOS initialisations
+soient effectuées. Comme on ne veut PAS TOUCHER
+une seule ligne au code OSEK, on utilise un kernel_cfg.c
+modifié, où une nouvelle fonction, "usr_init()", est
+appelée à l'initialisation du système.
+CETTE FONCTION DOIT ÊTRE DÉFINIE
+(vide éventuellement)
+------------------------------*/
 void usr_init(void) {
 	GetResource(lcd);
 
@@ -161,7 +149,18 @@ void usr_init(void) {
 	ReleaseResource(lcd);
 }
 
+/* Limits the PWM value sent to the servo motor
+between -100 and 100 (limits defined by the API)
+and actually controls the motor with this value
+by calling ecrobot_set_motor_speed
 
+Parameters
+	port: NXT_PORT_A, NXT_PORT_B, NXT_PORT_C
+	speed : theorically between -100 and 100
+
+Returns
+	None 
+*/ 
 void output_motor(U32 port, _real speed) {
 	int speed_percent;
 
@@ -176,30 +175,74 @@ void output_motor(U32 port, _real speed) {
 	ecrobot_set_motor_speed(port, speed_percent); // brake mode = 0 (float?)
 }
 
+/* Receives the output of the controller and
+do the necessary empirical adjustements with
+V_MAX and V_AVG in order to give a smoother
+movement to the robot. Only sends the control
+command to the motor if not in obstacle mode
+
+Parameters
+	ud: right output value of the motor_control subsytem
+
+Returns
+	None 
+*/ 
 void motor_control_O_u_d(_real ud) {
 	show_var("ud", 5, ud * 100);
 
-	 ud += V_MOY;
+	ud += V_AVG;
 	_real Pd = ((ud/V_MAX) * 100) + 10;
 
 	show_var("Pd", 3, Pd);
 
-	output_motor(RIGHT_WHEEL_PORT, Pd);
+	if (!multi_task_obst) output_motor(RIGHT_WHEEL_PORT, Pd);
 }
 
+/* Receives the output of the motor controller and
+do the necessary empirical adjustements with
+V_MAX and V_AVG in order to give a smoother
+movement to the robot. Only sends the control
+command to the motor if not in obstacle mode
+
+Parameters
+	ug: left output value of the motor_control subsytem
+
+Returns
+	None 
+*/
 void motor_control_O_u_g(_real ug) {
 	show_var("ug", 6, ug * 100);
 
-	ug += V_MOY;
+	ug += V_AVG;
 	_real Pg = ((ug/V_MAX) * 100) + 10;
 
 	show_var("Pg", 4, Pg);
 
-	output_motor(LEFT_WHEEL_PORT, Pg);
+	if (!multi_task_obst) output_motor(LEFT_WHEEL_PORT, Pg);
 }
 
-void obst_detector_O_obstacle(_boolean obs) {
-	
+/* Receives the output of the obstacle controller
+and decides what to send to the servo motors so
+that the robot avoid the obstacle.
+
+Parameters
+	obst: output value of the obst_detector subsytem
+
+Returns
+	None 
+*/
+void obst_detector_O_obstacle(_boolean obst) {
+	_real Pg = -32;
+	_real Pd = 25;
+
+	multi_task_obst = obst;
+
+	if (multi_task_obst) {
+		show_var("Pd", 3, Pg);
+		show_var("Pg", 4, Pd);
+		output_motor(LEFT_WHEEL_PORT, Pg);
+		output_motor(RIGHT_WHEEL_PORT, Pd);
+	} 
 }
 
 /*------------------------------
@@ -209,11 +252,18 @@ Elles doivent :
 - être déclarées par la macro TASK
 - le code doit se terminer par la macro TerminateTask()
 ------------------------------*/
+
+/* High Task: motor control
+
+Reads the light sensor values, uses the calibration
+to adjust them between 0 and 100 and finally calls 
+the motor_control subsystem sending these values
+as parameters.
+*/
 TASK(HighTask) {
 	U16 raw_sensor_right;
 	U16 raw_sensor_left;
 
-	// returns 0 to 1023
 	raw_sensor_right = ecrobot_get_light_sensor(RIGHT_LIGHT_SENSOR);
 	raw_sensor_left = ecrobot_get_light_sensor(LEFT_LIGHT_SENSOR);
 
@@ -243,18 +293,23 @@ TASK(HighTask) {
 
 	motor_control_I_Cd(raw_sensor_right);
 	motor_control_I_Cg(raw_sensor_left);
-
 	motor_control_step();
 
 	TerminateTask();
 }
 
+/* Low Task: obstacle control
+
+Reads the sonar sensor value, verify if the sensor
+is ready (has not send -1), then limits the read
+value between 0-100 and send it to the obst_detector
+subsystem, together with a adjusted value of the left
+light sensor (the same way as it is done in the High 
+Task)
+*/
 TASK(LowTask) {
-	/* Sonar value */
 	static U32 previous_raw_sonar_value = 255;
 	U16 raw_sensor_left;
-
-
 
 	raw_sensor_left = ecrobot_get_light_sensor(LEFT_LIGHT_SENSOR);
 
@@ -267,10 +322,8 @@ TASK(LowTask) {
 	raw_sensor_left = ((raw_sensor_left - sens_white_cal_left) * 100 /
 				(sens_black_cal_left - sens_white_cal_left));
 
-	show_var("raw_left", 1, raw_sensor_left);
-
-
-
+	raw_sensor_left = 100 - raw_sensor_left;
+	
 	U32 raw_sonar_value = ecrobot_get_sonar_sensor(SONAR_SENSOR);
 
 	if (raw_sonar_value < 0)
@@ -278,14 +331,11 @@ TASK(LowTask) {
 	else
 		previous_raw_sonar_value = raw_sonar_value;
 
-	show_var("raw_sonar", 7, raw_sonar_value);
-
 	_float sonar_value = LIMIT_SONAR(raw_sonar_value);
 	show_var("sonar", 2, sonar_value);
 
 	obst_detector_I_Co(sonar_value);
 	obst_detector_I_Cg(raw_sensor_left);
-
 	obst_detector_step();
 
 	TerminateTask();

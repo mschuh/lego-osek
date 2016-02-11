@@ -4,8 +4,15 @@
 * context   method = STATIC
 * ext call  method = PROCEDURES
 ********/
+/* This program needs external declarations */
 #define _obst_detector_EC2C_SRC_FILE
 #include "obst_detector.h"
+/*--------
+ * the following ``constants'' must be defined:
+extern _real white_threshold;
+extern _real black_threshold;
+extern _real obstacle_threshold;
+--------*/
 /*--------
 Internal structure for the call
 --------*/
@@ -19,6 +26,8 @@ typedef struct  {
    //REGISTERS
    _boolean M13;
    _boolean M13_nil;
+   _boolean M32;
+   _boolean M32_nil;
    _boolean M27;
    _boolean M27_nil;
    _boolean M20;
@@ -55,6 +64,7 @@ Reset procedure
 --------*/
 void obst_detector_reset(){
    ctx.M13_nil = _true;
+   ctx.M32_nil = _true;
    ctx.M27_nil = _true;
    ctx.M20_nil = _true;
    ctx.M10_nil = _true;
@@ -80,14 +90,19 @@ void obst_detector_step(){
    _boolean L26;
    _boolean L23;
    _boolean L22;
+   _boolean L30;
+   _boolean L31;
+   _boolean L29;
+   _boolean L28;
    _boolean L21;
    _boolean L14;
    _boolean T13;
+   _boolean T32;
    _boolean T27;
    _boolean T20;
    _boolean T10;
 //CODE
-   L4 = (ctx._Co < 10.000000);
+   L4 = (ctx._Co < obstacle_threshold);
    if (ctx.M7) {
       L6 = _false;
    } else {
@@ -102,7 +117,7 @@ void obst_detector_step(){
    L11 = (! L12);
    L2 = (L3 && L11);
    obst_detector_O_obstacle(L2);
-   L17 = (ctx._Cg >= 90.000000);
+   L17 = (ctx._Cg >= white_threshold);
    if (ctx.M7) {
       L19 = _false;
    } else {
@@ -110,7 +125,7 @@ void obst_detector_step(){
    }
    L16 = (L17 || L19);
    L15 = (L16 && L11);
-   L24 = (ctx._Cg <= 35.000000);
+   L24 = (ctx._Cg <= black_threshold);
    if (ctx.M7) {
       L26 = _false;
    } else {
@@ -118,14 +133,25 @@ void obst_detector_step(){
    }
    L23 = (L24 || L26);
    L22 = (L23 && L11);
-   L21 = (L22 && L15);
+   L30 = (ctx._Cg <= white_threshold);
+   if (ctx.M7) {
+      L31 = _false;
+   } else {
+      L31 = ctx.M32;
+   }
+   L29 = (L30 || L31);
+   L28 = (L29 && L11);
+   L21 = (L22 && L28);
    L14 = (L15 && L21);
    T13 = L14;
+   T32 = L28;
    T27 = L22;
    T20 = L15;
    T10 = L2;
    ctx.M13 = T13;
    ctx.M13_nil = _false;
+   ctx.M32 = T32;
+   ctx.M32_nil = _false;
    ctx.M27 = T27;
    ctx.M27_nil = _false;
    ctx.M20 = T20;

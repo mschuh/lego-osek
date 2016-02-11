@@ -98,6 +98,10 @@ omega=1;
 ksi=1;
 ki_teta=omega*omega/alpha;
 kp_teta=2*ksi*omega/alpha;
+black_threshold=10;
+white_threshold=90;
+obstacle_threshold=20;
+rotate_speed=0.1;
 
 
 

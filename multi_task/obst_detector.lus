@@ -1,5 +1,8 @@
 -- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
--- Thu Feb 11 14:52:32 2016
+-- Thu Feb 11 18:43:36 2016
+const black_threshold : real;
+const white_threshold : real;
+const obstacle_threshold : real;
 node obst_detector(Co: real; Cg: real) returns (obstacle: bool);
 var
    w_000: real;
@@ -25,7 +28,7 @@ let
    w_002 = mem(w_000, w_001);
    w_003 = Co;
    w_001 = R;
-   w_000 = (w_003 < 10.0);
+   w_000 = (w_003 < obstacle_threshold);
    obstacle_detected = w_002;
 tel
 node WBW(Cg: real; R: bool) returns (WBW: bool);
@@ -75,7 +78,7 @@ let
    w_003 = mem_02(w_000, w_002);
    Out1 = w_003;
    w_002 = R;
-   w_000 = (w_001 <= 35.0);
+   w_000 = (w_001 <= black_threshold);
 tel
 node white1(Cg: real; R: bool) returns (Out1: bool);
 var
@@ -88,7 +91,7 @@ let
    w_003 = mem_01(w_000, w_002);
    Out1 = w_003;
    w_002 = R;
-   w_000 = (w_001 >= 90.0);
+   w_000 = (w_001 >= white_threshold);
 tel
 node white0(Cg: real; R: bool) returns (Out1: bool);
 var
@@ -101,7 +104,7 @@ let
    w_003 = mem_03(w_000, w_002);
    Out1 = w_003;
    w_002 = R;
-   w_000 = (w_001 >= 90.0);
+   w_000 = (w_001 <= white_threshold);
 tel
 node mem_02(S: bool; R: bool) returns (Q: bool);
 var

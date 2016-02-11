@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.252"
+    ComputedModelVersion    "1.253"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -56,7 +56,7 @@ Model {
 	LoadSaveID		"147"
 	Extents			[1681.0, 813.0]
 	ZoomFactor		[1.14]
-	Offset			[0.0, 1.1368683772161603e-13]
+	Offset			[1.1368683772161603e-13, 1.1368683772161603e-13]
       }
     }
   }
@@ -66,9 +66,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schuhm"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Feb 11 14:41:00 2016"
-  RTWModifiedTimeStamp	  377102453
-  ModelVersionFormat	  "1.%<AutoIncrement:252>"
+  LastModifiedDate	  "Thu Feb 11 16:07:39 2016"
+  RTWModifiedTimeStamp	  377107633
+  ModelVersionFormat	  "1.%<AutoIncrement:253>"
   ConfigurationManager	  "none"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -1050,7 +1050,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "676"
+    SIDHighWatermark	    "677"
     Block {
       BlockType		      SubSystem
       Name		      "Controller"
@@ -1928,7 +1928,7 @@ Model {
 		  SourceType		  "Compare To Constant"
 		  ContentPreviewEnabled	  off
 		  relop			  "<"
-		  const			  "10"
+		  const			  "obstacle_threshold"
 		  OutDataTypeStr	  "boolean"
 		  ZeroCross		  on
 		}
@@ -2246,7 +2246,7 @@ Model {
 		    SourceType		    "Compare To Constant"
 		    ContentPreviewEnabled   off
 		    relop		    "<="
-		    const		    "35"
+		    const		    "black_threshold"
 		    OutDataTypeStr	    "boolean"
 		    ZeroCross		    on
 		    }
@@ -2480,16 +2480,16 @@ Model {
 		    Block {
 		    BlockType		    Reference
 		    Name		    "Compare\nTo Constant"
-		    SID			    "500"
+		    SID			    "677"
 		    Ports		    [1, 1]
-		    Position		    [135, 70, 165, 100]
-		    ZOrder		    10
+		    Position		    [130, 70, 160, 100]
+		    ZOrder		    21
 		    LibraryVersion	    "1.287"
 		    SourceBlock		    "simulink/Logic and Bit\nOperations/Compare\nTo Constant"
 		    SourceType		    "Compare To Constant"
 		    ContentPreviewEnabled   off
-		    relop		    ">="
-		    const		    "90"
+		    relop		    "<="
+		    const		    "white_threshold"
 		    OutDataTypeStr	    "boolean"
 		    ZeroCross		    on
 		    }
@@ -2664,17 +2664,17 @@ Model {
 		    DstPort		    2
 		    }
 		    Line {
-		    ZOrder		    44
+		    ZOrder		    49
 		    SrcBlock		    "Cg"
 		    SrcPort		    1
 		    DstBlock		    "Compare\nTo Constant"
 		    DstPort		    1
 		    }
 		    Line {
-		    ZOrder		    47
+		    ZOrder		    48
 		    SrcBlock		    "Compare\nTo Constant"
 		    SrcPort		    1
-		    Points		    [47, 0; 0, 20]
+		    Points		    [52, 0; 0, 20]
 		    DstBlock		    "mem"
 		    DstPort		    1
 		    }
@@ -2690,7 +2690,7 @@ Model {
 		  RequestExecContextInheritance	off
 		  System {
 		    Name		    "white1"
-		    Location		    [2, 51, 1918, 1051]
+		    Location		    [2, 52, 1918, 1051]
 		    Open		    off
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    200
@@ -2732,7 +2732,7 @@ Model {
 		    SourceType		    "Compare To Constant"
 		    ContentPreviewEnabled   off
 		    relop		    ">="
-		    const		    "90"
+		    const		    "white_threshold"
 		    OutDataTypeStr	    "boolean"
 		    ZeroCross		    on
 		    }
@@ -3091,7 +3091,7 @@ Model {
 	  Position		  [750, 215, 780, 245]
 	  ZOrder		  34
 	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
-	  Value			  "0.1"
+	  Value			  "rotate_speed"
 	}
 	Block {
 	  BlockType		  Constant
@@ -3101,7 +3101,7 @@ Model {
 	  ZOrder		  36
 	  ForegroundColor	  "[0.501961, 0.501961, 0.501961]"
 	  NamePlacement		  "alternate"
-	  Value			  "-0.1"
+	  Value			  "-rotate_speed"
 	}
 	Block {
 	  BlockType		  Outport

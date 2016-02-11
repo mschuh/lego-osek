@@ -7,6 +7,8 @@
 ********/
 #ifndef _obst_detector_EC2C_H_FILE
 #define _obst_detector_EC2C_H_FILE
+/* This program needs external declarations */
+#include "obst_detector_ext.h"
 /*-------- Predefined types ---------*/
 #ifndef _EC2C_PREDEF_TYPES
 #define _EC2C_PREDEF_TYPES
